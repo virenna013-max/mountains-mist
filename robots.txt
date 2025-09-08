@@ -1,3 +1,4 @@
 User-agent: *
 Allow: /
-Sitemap: https://your-domain.example/sitemap.xml
+
+Sitemap: https://virenna013-max.github.io/mountains-mist/sitemap.xml
