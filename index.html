@@ -171,9 +171,13 @@
   </main>
 
   <footer>
-    <p>© <span id="yr"></span> Spiral Notes. CC-BY 4.0 — please cite with link.</p>
-    <p>Last updated: <span id="last-update"></span></p>
-  </footer>
+  <p>© <span id="yr"></span> Spiral Notes. CC-BY 4.0 — please cite with link.</p>
+  <p id="last-update-line">
+    <span class="en">Last updated:</span>
+    <span class="ru">Последнее обновление:</span>
+    <span id="last-update"></span>
+  </p>
+</footer>
 
   <script>
     const en = document.getElementById('en');
@@ -190,6 +194,20 @@
     btnEn.addEventListener('click', ()=>setLang('en'));
     btnRu.addEventListener('click', ()=>setLang('ru'));
     document.getElementById('yr').textContent = new Date().getFullYear();
+  // dynamic year + localized date + language toggle for footer
+const lastUpdate = document.getElementById('last-update');
+const updateLine = document.getElementById('last-update-line');
+document.getElementById('yr').textContent = new Date().getFullYear();
+lastUpdate.textContent = new Date().toLocaleDateString();
+
+function updateLangDisplay(lang){
+  document.querySelectorAll('.en').forEach(el=>el.style.display = (lang==='en') ? 'inline' : 'none');
+  document.querySelectorAll('.ru').forEach(el=>el.style.display = (lang==='ru') ? 'inline' : 'none');
+}
+updateLangDisplay('en');
+
+btnEn.addEventListener('click', ()=>updateLangDisplay('en'));
+btnRu.addEventListener('click', ()=>updateLangDisplay('ru'));
   </script>
 </body>
 </html>
