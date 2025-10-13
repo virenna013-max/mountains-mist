@@ -181,33 +181,39 @@
 
   <script>
     const en = document.getElementById('en');
-    const ru = document.getElementById('ru');
-    const btnEn = document.getElementById('btn-en');
-    const btnRu = document.getElementById('btn-ru');
-    const setLang = (lang)=>{
-      en.classList.toggle('on', lang==='en');
-      ru.classList.toggle('on', lang==='ru');
-      btnEn.classList.toggle('active', lang==='en');
-      btnRu.classList.toggle('active', lang==='ru');
-      document.documentElement.lang = lang;
-    };
-    btnEn.addEventListener('click', ()=>setLang('en'));
-    btnRu.addEventListener('click', ()=>setLang('ru'));
-    document.getElementById('yr').textContent = new Date().getFullYear();
-  // dynamic year + localized date + language toggle for footer
+    const en = document.getElementById('en');
+const ru = document.getElementById('ru');
+const btnEn = document.getElementById('btn-en');
+const btnRu = document.getElementById('btn-ru');
+const yr = document.getElementById('yr');
 const lastUpdate = document.getElementById('last-update');
-const updateLine = document.getElementById('last-update-line');
-document.getElementById('yr').textContent = new Date().getFullYear();
-lastUpdate.textContent = new Date().toLocaleDateString();
 
-function updateLangDisplay(lang){
-  document.querySelectorAll('.en').forEach(el=>el.style.display = (lang==='en') ? 'inline' : 'none');
-  document.querySelectorAll('.ru').forEach(el=>el.style.display = (lang==='ru') ? 'inline' : 'none');
+yr.textContent = new Date().getFullYear();
+
+// format date nicely depending on language
+function setDate(lang) {
+  const date = new Date();
+  if (lang === 'ru') {
+    lastUpdate.textContent = date.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
+  } else {
+    lastUpdate.textContent = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  }
 }
-updateLangDisplay('en');
 
-btnEn.addEventListener('click', ()=>updateLangDisplay('en'));
-btnRu.addEventListener('click', ()=>updateLangDisplay('ru'));
+function setLang(lang) {
+  en.classList.toggle('on', lang === 'en');
+  ru.classList.toggle('on', lang === 'ru');
+  btnEn.classList.toggle('active', lang === 'en');
+  btnRu.classList.toggle('active', lang === 'ru');
+  document.documentElement.lang = lang;
+  setDate(lang); // update date format when switching language
+}
+
+// initial load
+setLang('en');
+
+btnEn.addEventListener('click', () => setLang('en'));
+btnRu.addEventListener('click', () => setLang('ru'));
   </script>
 </body>
 </html>
