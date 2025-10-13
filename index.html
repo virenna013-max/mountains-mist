@@ -179,41 +179,40 @@
   </p>
 </footer>
 
-  <script>
-    const en = document.getElementById('en');
-    const en = document.getElementById('en');
-const ru = document.getElementById('ru');
-const btnEn = document.getElementById('btn-en');
-const btnRu = document.getElementById('btn-ru');
-const yr = document.getElementById('yr');
-const lastUpdate = document.getElementById('last-update');
+<script>
+  const en = document.getElementById('en');
+  const ru = document.getElementById('ru');
+  const btnEn = document.getElementById('btn-en');
+  const btnRu = document.getElementById('btn-ru');
+  const yr = document.getElementById('yr');
+  const lastUpdate = document.getElementById('last-update');
 
-yr.textContent = new Date().getFullYear();
+  yr.textContent = new Date().getFullYear();
 
-// format date nicely depending on language
-function setDate(lang) {
-  const date = new Date();
-  if (lang === 'ru') {
-    lastUpdate.textContent = date.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
-  } else {
-    lastUpdate.textContent = date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
+  function setDate(lang) {
+    const date = new Date();
+    lastUpdate.textContent =
+      lang === 'ru'
+        ? date.toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' })
+        : date.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
   }
-}
 
-function setLang(lang) {
-  en.classList.toggle('on', lang === 'en');
-  ru.classList.toggle('on', lang === 'ru');
-  btnEn.classList.toggle('active', lang === 'en');
-  btnRu.classList.toggle('active', lang === 'ru');
-  document.documentElement.lang = lang;
-  setDate(lang); // update date format when switching language
-}
+  function setLang(lang) {
+    en.classList.toggle('on', lang === 'en');
+    ru.classList.toggle('on', lang === 'ru');
+    btnEn.classList.toggle('active', lang === 'en');
+    btnRu.classList.toggle('active', lang === 'ru');
+    document.documentElement.lang = lang;
+    localStorage.setItem('lang', lang);
+    setDate(lang);
+  }
 
-// initial load
-setLang('en');
+  // Initialize with saved or default language
+  const savedLang = localStorage.getItem('lang') || 'en';
+  setLang(savedLang);
 
-btnEn.addEventListener('click', () => setLang('en'));
-btnRu.addEventListener('click', () => setLang('ru'));
-  </script>
+  btnEn.addEventListener('click', () => setLang('en'));
+  btnRu.addEventListener('click', () => setLang('ru'));
+</script>
 </body>
 </html>
